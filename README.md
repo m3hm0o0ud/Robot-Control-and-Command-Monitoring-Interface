@@ -1,3 +1,4 @@
+
 # **Robot Control and Command Monitoring Interface**
 
 This project integrates two key functionalities:
@@ -47,7 +48,7 @@ CREATE TABLE `robot_commands` (
 
 **Visual Example of the Database Structure:**
 
-![Database Structure](images/database.png)
+![Database Structure](./screenshots/Commands-on-Database.PNG)
 
 ### **3. Project Deployment**
 
@@ -70,7 +71,7 @@ CREATE TABLE `robot_commands` (
 
 **Screenshot of the Control Interface:**
 
-![Control Interface](images/control-interface.png)
+![Control Interface](./screenshots/Interface-Robot-Commands.PNG)
 
 ### **2. Technical Overview**
 
@@ -95,7 +96,7 @@ CREATE TABLE `robot_commands` (
 
 **Screenshot of the Monitoring Interface:**
 
-![Command Monitoring Interface](images/command-display.png)
+![Command Monitoring Interface](./screenshots/Show-Last-Commands-Page.PNG)
 
 ### **2. Technical Overview**
 
@@ -122,3 +123,4 @@ CREATE TABLE `robot_commands` (
 ## **License**
 
 This project is distributed under the MIT License. You are free to use, modify, and distribute this software in your own projects.
+
