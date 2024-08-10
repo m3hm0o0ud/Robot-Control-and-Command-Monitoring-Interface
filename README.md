@@ -48,7 +48,7 @@ CREATE TABLE `robot_commands` (
 
 **Visual Example of the Database Structure:**
 
-![Database Structure](./screenshots/Commands-on-Database.PNG)
+![Database Structure](https://github.com/m3hm0o0ud/Robot-Control-and-Command-Monitoring-Interface/blob/main/screenshots/Commands%20on%20Database.PNG)
 
 ### **3. Project Deployment**
 
@@ -71,7 +71,7 @@ CREATE TABLE `robot_commands` (
 
 **Screenshot of the Control Interface:**
 
-![Control Interface](./screenshots/Interface-Robot-Commands.PNG)
+![Control Interface](https://github.com/m3hm0o0ud/Robot-Control-and-Command-Monitoring-Interface/blob/main/screenshots/Interface%20Robot%20Commands.PNG)
 
 ### **2. Technical Overview**
 
@@ -96,7 +96,7 @@ CREATE TABLE `robot_commands` (
 
 **Screenshot of the Monitoring Interface:**
 
-![Command Monitoring Interface](./screenshots/Show-Last-Commands-Page.PNG)
+![Command Monitoring Interface](https://github.com/m3hm0o0ud/Robot-Control-and-Command-Monitoring-Interface/blob/main/screenshots/Show%20Last%20Commands%20Page.PNG)
 
 ### **2. Technical Overview**
 
