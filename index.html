@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control Panel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .control-panel {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .control-panel h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .control-button {
+            padding: 15px 30px;
+            margin: 10px 15px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #ffffff;
+            transition: background-color 0.3s ease;
+            min-width: 120px;
+        }
+        .control-button:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="control-panel">
+        <h1>Robot Direction Control</h1>
+        <button class="control-button" onclick="sendCommand('forward')">Forward</button><br>
+        <button class="control-button" onclick="sendCommand('left')">Left</button>
+        <button class="control-button" onclick="sendCommand('stop')">Stop</button>
+        <button class="control-button" onclick="sendCommand('right')">Right</button><br>
+        <button class="control-button" onclick="sendCommand('backward')">Backward</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function sendCommand(command) {
+            fetch('send_command.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command: command })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('message').innerText = data.message;
+            })
+            .catch(error => {
+                document.getElementById('message').innerText = 'Error sending command.';
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Command Display</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .data-panel {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+        .data-panel h1 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .command-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            position: relative;
+        }
+        .command-card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            background-color: #f7f7f7; /* Default color for non-highlighted cards */
+        }
+        /* Colors for command types */
+        .command-card.forward {
+            background-color: #28a745; /* Green for forward */
+            color: #fff;
+        }
+        .command-card.backward {
+            background-color: #dc3545; /* Red for backward */
+            color: #fff;
+        }
+        .command-card.left {
+            background-color: #ffc107; /* Yellow for left */
+            color: #333;
+        }
+        .command-card.right {
+            background-color: #007bff; /* Blue for right */
+            color: #fff;
+        }
+        .command-card.stop {
+            background-color: #6c757d; /* Gray for stop */
+            color: #fff;
+        }
+        /* Arrow for last command */
+        .command-card.highlight::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #dc3545; /* Red arrow */
+        }
+        .loading {
+            font-size: 22px;
+            color: #888;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class="data-panel">
+        <h1>Last Command</h1>
+        <div id="command-cards" class="command-cards">
+            <div id="box5" class="command-card loading">Loading...</div>
+            <div id="box4" class="command-card loading">Loading...</div>
+            <div id="box3" class="command-card loading">Loading...</div>
+            <div id="box2" class="command-card loading">Loading...</div>
+            <div id="box1" class="command-card loading">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        function applyColorClass(command) {
+            switch (command.toLowerCase()) {
+                case 'forward': return 'forward';
+                case 'backward': return 'backward';
+                case 'left': return 'left';
+                case 'right': return 'right';
+                case 'stop': return 'stop';
+                default: return '';
+            }
+        }
+
+        // Fetch the last 5 commands from the server
+        fetch('get_last_five_values.php')
+            .then(response => response.json())
+            .then(data => {
+                const boxes = [document.getElementById('box1'), document.getElementById('box2'), document.getElementById('box3'), document.getElementById('box4'), document.getElementById('box5')];
+
+                // Display only the last command prominently
+                const lastCommand = data.values[0];
+                if (lastCommand) {
+                    boxes[4].innerText = lastCommand; // Display the last command in the topmost box
+                    boxes[4].classList.remove('loading');
+                    boxes[4].classList.add(applyColorClass(lastCommand));
+                    boxes[4].classList.add('highlight'); // Add arrow to highlight the last command
+                }
+
+                // Display the rest of the commands below, subdued
+                for (let i = 1; i < data.values.length; i++) {
+                    if (data.values[i]) {
+                        boxes[4 - i].innerText = data.values[i];
+                        boxes[4 - i].classList.remove('loading');
+                        boxes[4 - i].classList.add(applyColorClass(data.values[i]));
+                    } else {
+                        boxes[4 - i].innerText = 'No Data';
+                        boxes[4 - i].classList.remove('loading');
+                    }
+                }
+            })
+            .catch(error => {
+                const boxes = [document.getElementById('box1'), document.getElementById('box2'), document.getElementById('box3'), document.getElementById('box4'), document.getElementById('box5')];
+                boxes.forEach(box => {
+                    box.innerText = 'Error';
+                    box.classList.add('error');
+                });
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
